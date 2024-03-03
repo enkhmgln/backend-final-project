@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import asyncHandler from "../middlewares/asyncHandler";
-import { error } from "console";
 
 const prisma = new PrismaClient();
 
@@ -20,7 +19,7 @@ const getUsers = asyncHandler(
     });
     res.status(200).json({ users, error: null });
     if (!users) {
-      throw Error("Хэрэглэгч байхгүй байна");
+      throw Error("Хэрэглэгч олдсонгүй");
     }
   }
 );
@@ -36,9 +35,15 @@ const createUser = asyncHandler(
         password: hashedPassword,
       },
     });
-    res
-      .status(201)
-      .json({ message: "User registered successfully", user, error: null });
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "", {
+      expiresIn: "1h",
+    });
+    res.status(201).json({
+      message: "User registered successfully",
+      user,
+      token,
+      error: null,
+    });
 
     console.log("Нууц үг : ", password);
     console.log("Нууц үг hashed : ", hashedPassword);
@@ -58,7 +63,7 @@ const loginUser = asyncHandler(
     if (!passwordMatch) {
       throw Error("Authentication failed: Incorrect password");
     }
-    const token = jwt.sign({ userId: user.id }, secretKey, {
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "", {
       expiresIn: "1h",
     });
     res.status(200).json({ token, message: "Амжилттай" });

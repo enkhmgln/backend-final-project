@@ -1,0 +1,23 @@
+
+[
+    {
+        "name":"Нараа",
+        "password":"$2b$10$OjpHiM9AWxOSCdIIonDhlejnesDlBfGny3mzWnacH8nonmEjMdaoG"
+    },
+    {
+        "name":"boldoo",
+        "password":"$2b$10$OjpHiM9AWxOSCdIIonDhlejnesDlBfGny3mzWnacH8nonmEjMdaoG"
+    },
+    {
+        "name":"amgaa",
+        "password":"$2b$10$OjpHiM9AWxOSCdIIonDhlejnesDlBfGny3mzWnacH8nonmEjMdaoG"
+    },
+    {
+        "name":"dolgor",
+        "password":"$2b$10$OjpHiM9AWxOSCdIIonDhlejnesDlBfGny3mzWnacH8nonmEjMdaoG"
+    },
+    {
+        "name":"test@user",
+        "password":"$2b$10$OjpHiM9AWxOSCdIIonDhlejnesDlBfGny3mzWnacH8nonmEjMdaoG"
+    }
+]

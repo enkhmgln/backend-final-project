@@ -34,7 +34,9 @@ const getProducts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const products = await prisma.product.findMany();
     if (!products) {
-      throw Error("Бүтээгдэхүүн олдсонгүй");
+      const error = new Error("Product not found");
+      (error as any).code = "P2025";
+      throw error;
     }
     res.status(200).json({ success: true, products, error: null });
   }
@@ -42,13 +44,15 @@ const getProducts = asyncHandler(
 
 const getProduct = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { productId } = req.params;
+    const { productId, userId } = req.params;
 
     const product = await prisma.product.findUnique({
       where: { id: parseInt(productId) },
     });
     if (!product) {
-      throw Error("Бүтээгдэхүүн олдсонгүй");
+      const error = new Error("Product not found");
+      (error as any).code = "P2025";
+      throw error;
     }
     res.status(200).json({ success: true, product, error: null });
   }
@@ -61,7 +65,9 @@ const deleteProduct = asyncHandler(
       where: { id: parseInt(productId) },
     });
     if (!product) {
-      throw Error("Бүтээгдэхүүн олдсонгүй.");
+      const error = new Error("Product not found");
+      (error as any).code = "P2025";
+      throw error;
     }
     res.status(200).json({ success: true, product, error: null });
   }
@@ -78,16 +84,16 @@ const updateProduct = asyncHandler(
       data: req.body,
     });
     if (!product) {
-      throw Error("Бүтээгдэхүүн олдсонгүй");
+      const error = new Error("Product not found");
+      (error as any).code = "P2025";
+      throw error;
     }
-    res
-      .status(200)
-      .json({
-        success: true,
-        product,
-        message: `Бүтээгдэхүүнийг амжилттай шинэчлэлээ`,
-        error: null,
-      });
+    res.status(200).json({
+      success: true,
+      product,
+      message: `Бүтээгдэхүүнийг амжилттай шинэчлэлээ`,
+      error: null,
+    });
   }
 );
 
