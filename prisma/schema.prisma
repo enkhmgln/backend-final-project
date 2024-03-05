@@ -24,4 +24,5 @@ model User {
 
 model Order {
   id Int @id @default(autoincrement())
+  total Int 
 }
