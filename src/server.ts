@@ -1,6 +1,6 @@
 import dotenv = require("dotenv");
 import express = require("express");
-import Product from "./routes/products";
+import Product from "./routes/Product.route";
 import Auth from "./routes/auth";
 import errorHandler from "./middlewares/errorHandler";
 import logger from "./middlewares/logger";

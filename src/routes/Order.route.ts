@@ -1,5 +1,5 @@
 import { Router } from "express";
-import productController from "../controller/productController";
+import productController from "../controller/Product.controller";
 // өөр route - ээс орж ирсэн parameter - ийг хүлээж авах чадвартай болгоно
 const router = Router({ mergeParams: true });
 

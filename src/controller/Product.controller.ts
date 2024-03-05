@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "../middlewares/asyncHandler";
-import ProductService from "../service/product.service";
+import ProductService from "../service/Product.service";
 
 class ProductController {
   createProduct = asyncHandler(

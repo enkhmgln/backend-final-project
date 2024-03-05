@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import asyncHandler from "../middlewares/asyncHandler";
-import UserService from "../service/user.service";
+import UserService from "../service/User.service";
 
 class userController {
   getUsers = asyncHandler(
