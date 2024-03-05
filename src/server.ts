@@ -18,8 +18,7 @@ app.use(bodyParser.json());
 const port = process.env.PORT;
 
 app.use(logger);
-app.use("/api/products", verifyToken);
-app.use("/api/products", Product);
+app.use("/api/products", verifyToken, Product);
 app.use("/api/auth", Auth);
 app.use("/api/users", Auth);
 
