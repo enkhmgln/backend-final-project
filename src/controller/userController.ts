@@ -1,73 +1,35 @@
 import { Response, Request, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
 import asyncHandler from "../middlewares/asyncHandler";
+import * as userService from "../service/user.service";
 
-const prisma = new PrismaClient();
-
-const secretKey = crypto.randomBytes(32).toString("hex");
-// console.log("secret_key : ", secretKey);
-
-const getUsers = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const users = await prisma.user.findMany({
-      select: {
-        name: true,
-      },
-    });
-    res.status(200).json({ users, error: null });
-    if (!users) {
-      throw Error("Хэрэглэгч олдсонгүй");
+class userController {
+  getUsers = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const users = await userService.getUsersService();
+      res.status(200).json({ users, error: null });
     }
-  }
-);
+  );
 
-const createUser = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+  createUser = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { name, password } = req.body;
 
-    const user = await prisma.user.create({
-      data: {
-        name: username,
-        password: hashedPassword,
-      },
-    });
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "", {
-      expiresIn: "1h",
-    });
-    res.status(201).json({
-      message: "User registered successfully",
-      user,
-      token,
-      error: null,
-    });
+      const user = await userService.createUserService(name, password);
 
-    console.log("Нууц үг : ", password);
-    console.log("Нууц үг hashed : ", hashedPassword);
-  }
-);
-
-const loginUser = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password } = req.body;
-    const user = await prisma.user.findUnique({
-      where: { name: username },
-    });
-    if (!user) {
-      throw Error("Authentication failed: User not found");
+      res.status(201).json({
+        message: "User registered successfully",
+        user,
+        error: null,
+      });
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      throw Error("Authentication failed: Incorrect password");
-    }
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "", {
-      expiresIn: "1h",
-    });
-    res.status(200).json({ token, message: "Амжилттай" });
-  }
-);
+  );
 
-export { getUsers, createUser, loginUser };
+  loginUser = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { name, password } = req.body;
+      const user = await userService.loginService(name, password);
+      res.status(200).json({ user, message: "Амжилттай" });
+    }
+  );
+}
+export default new userController();
