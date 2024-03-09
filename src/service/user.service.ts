@@ -1,4 +1,3 @@
-import express, { Response, Request, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -39,11 +38,11 @@ class UserService {
     });
 
     if (!user) {
-      throw Error("Authentication failed: User not found");
+      throw Error("user not found");
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      throw Error("Authentication failed: Incorrect password");
+      throw Error("incorrect password");
     }
     const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "", {
       expiresIn: "1h",
