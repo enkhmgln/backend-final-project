@@ -1,16 +1,8 @@
 import { Router } from "express";
-import productController from "../controller/Product.controller";
+import productController from "../controller/Order.controller";
 // өөр route - ээс орж ирсэн parameter - ийг хүлээж авах чадвартай болгоно
 const router = Router({ mergeParams: true });
 
-router
-  .route("/")
-  .get(productController.getProducts)
-  .post(productController.createProduct);
-router
-  .route("/:productId")
-  .get(productController.getProduct)
-  .put(productController.updateProduct)
-  .delete(productController.deleteProduct);
+router.route("/create").post(productController.createOrder);
 
 export default router;
