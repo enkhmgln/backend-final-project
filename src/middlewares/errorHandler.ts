@@ -19,14 +19,14 @@ const errorHandler = (
   if (error.code === "P1001") {
     error.message = "Сервертэй холбогдож чадсангүй";
   }
-  if (err.message === "Authentication failed: Incorrect password") {
+  if (err.message === "incorrect password") {
     error.message = "Нууц үг буруу байна";
   }
   if (err.message === "jwt expired") {
     error.message = "токены хугацаа дууссан байна";
   }
 
-  if (err.message === "Authentication failed: User not found") {
+  if (err.message === "user not found") {
     error.message = "Хэрэглэгч олдсонгүй";
   }
   if (err.message === "jwt malformed") {
