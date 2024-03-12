@@ -17,8 +17,27 @@ class ProductController {
   );
   getProducts = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const products = await ProductService.getProductsService();
-      res.status(200).json({ success: true, products, error: null });
+      const sort = req.query.sort;
+      const page = req.query.page;
+      const limit = req.query.limit;
+
+      // Pagination
+      // Хэрвээ үзэх хуудасыг явуулаагүй бол 1-р хуудасыг авна..
+      const pageNum = parseInt(page as string) || 1;
+      // Хэрвээ хуудсанд байгаа category - ийн limit явуулаагүй бол нэг хуудсанд 30 category авна..
+      const pageLimit = parseInt(limit as string) || 30;
+
+      ["select", "limit", "page", "sort"].forEach(
+        (element) => delete req.query[element]
+      );
+      const result = await ProductService.getProductsService(
+        pageLimit,
+        pageNum,
+        sort as string,
+        req.query as any
+      );
+
+      res.status(200).json({ success: true, result, error: null });
     }
   );
   getProduct = asyncHandler(
