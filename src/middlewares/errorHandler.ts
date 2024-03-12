@@ -40,7 +40,7 @@ const errorHandler = (
   //   error.message = "Талбарын төрөл ";
   // }
   if (error.name === "PrismaClientInitializationError") {
-    error.message = "Сервертэй холбогдоход алдаа гарлаа";
+    error.message = "Баазтай холбогдоход алдаа гарлаа";
   }
 
   console.error("Алдаа : ", err);
