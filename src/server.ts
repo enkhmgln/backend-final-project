@@ -7,7 +7,7 @@ import errorHandler from "./middlewares/errorHandler";
 import logger from "./middlewares/logger";
 import verifyToken from "./middlewares/verifyToken";
 import bodyParser from "body-parser";
-
+import swaggerSpec from "./utils/swagger";
 dotenv.config();
 
 // const secretKey = crypto.randomBytes(32).toString("hex");
@@ -27,6 +27,7 @@ app.use("/api/users", Auth);
 app.use(errorHandler);
 
 app.listen(port, () => {
+  swaggerSpec(app, parseInt(port as string));
   console.log(`Сервер ${port} порт дээр ажиллаж байна...`);
 });
 
