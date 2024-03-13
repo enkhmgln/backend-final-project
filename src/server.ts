@@ -22,7 +22,6 @@ app.use(logger);
 app.use("/api/products", verifyToken, Product);
 app.use("/api/auth", Auth);
 app.use("/api/order", OrderRoute);
-app.use("/api/users", Auth);
 
 app.use(errorHandler);
 
