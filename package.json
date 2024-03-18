@@ -1,9 +1,6 @@
 {
   "module": "CommonJS",
   "dependencies": {
-    "@prisma/client": "^5.10.2",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.11.19",
     "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "crypto": "^1.0.1",
@@ -20,6 +17,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
+    "@prisma/client": "^5.10.2",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.19",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
