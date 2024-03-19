@@ -9,8 +9,11 @@ const errorHandler = (
   if (err.code === "P2025") {
     error.message = `Бүтээгдэхүүн олдсонгүй`;
   }
-  if (err.code === "P2002") {
-    error.message = `Нэвтрэх нэр аль хэдийн үүсэн байна`;
+  if (err.code === "P2002" && err.meta?.target.includes("name")) {
+    error.message = `Нэвтрэх нэр аль хэдийн үүсэн байна.`;
+  }
+  if (err.code === "P2002" && err.meta?.target.includes("email")) {
+    error.message = `Бүртгэлтэй и-мэйл байна.`;
   }
 
   if (error.code === "P1003") {
