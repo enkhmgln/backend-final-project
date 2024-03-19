@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from "express";
 import asyncHandler from "../middlewares/asyncHandler";
 import UserService from "../service/User.service";
+import { MailerService } from "../service/Mailer.service";
 
 class userController {
   getUsers = asyncHandler(
@@ -12,9 +13,14 @@ class userController {
 
   createUser = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { name, password } = req.body;
+      const { name, password, email } = req.body;
 
-      const user = await UserService.createUserService(name, password);
+      const user = await UserService.createUserService(name, password, email);
+      if (user) {
+        MailerService(user.user.email).catch((e) => {
+          console.log(e);
+        });
+      }
 
       res.status(201).json({
         message: "User registered successfully",
