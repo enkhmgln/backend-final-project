@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const token = req.headers.authorization;
   if (!token) throw Error("token is missing");
 
@@ -17,5 +21,3 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     }
   );
 };
-
-export default verifyToken;
