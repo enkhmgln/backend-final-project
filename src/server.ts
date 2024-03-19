@@ -6,7 +6,7 @@ import Auth from "./routes/auth";
 import OrderRoute from "./routes/Order.route";
 import errorHandler from "./middlewares/errorHandler";
 import logger from "./middlewares/logger";
-import verifyToken from "./middlewares/verifyToken";
+import { verifyToken } from "./middlewares/verifyToken";
 import bodyParser from "body-parser";
 import swaggerSpec from "./utils/swagger";
 dotenv.config();
