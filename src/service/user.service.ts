@@ -18,19 +18,20 @@ class UserService {
     }
     throw Error("Хэрэглэгч олдсонгүй");
   };
-  createUserService = async (name: string, password: string) => {
+  createUserService = async (name: string, password: string, email: string) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {
         name,
         password: hashedPassword,
+        email,
       },
     });
     const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "", {
       expiresIn: "1h",
     });
 
-    return { token, name: user.name };
+    return { token, user };
   };
   loginService = async (name: string, password: string) => {
     const user = await prisma.user.findUnique({
